@@ -503,7 +503,7 @@
 </div>
 <div class="slide" id="validation-example-on-form">
 <h1>Validation Example - On Form</h1>
-<iframe src="http://127.0.0.1:5000/passwords-form" width="350" height="400"style="float: right"></iframe><div class="highlight"><pre><span class="k">class</span> <span class="nc">PasswordCompareForm</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
+<iframe src="demo/passwords-form" width="350" height="400"style="float: right"></iframe><div class="highlight"><pre><span class="k">class</span> <span class="nc">PasswordCompareForm</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
     <span class="n">password</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="n">using</span><span class="p">(</span>
         <span class="n">label</span><span class="o">=</span><span class="s">&#39;New Password&#39;</span><span class="p">,</span>
         <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
@@ -524,7 +524,7 @@
 </div>
 <div class="slide" id="validation-example-on-element">
 <h1>Validation Example - On Element</h1>
-<iframe src="http://127.0.0.1:5000/passwords-element" width="350" height="400"style="float: right"></iframe><div class="highlight"><pre><span class="k">class</span> <span class="nc">PasswordCompareElement</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
+<iframe src="demo/passwords-element" width="350" height="400"style="float: right"></iframe><div class="highlight"><pre><span class="k">class</span> <span class="nc">PasswordCompareElement</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
     <span class="n">password</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="n">using</span><span class="p">(</span>
         <span class="n">label</span><span class="o">=</span><span class="s">&#39;New Password&#39;</span><span class="p">,</span>
         <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
@@ -727,7 +727,6 @@
 <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;password.html&#39;</span><span class="p">,</span>
                        <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span> <span class="n">generator</span><span class="o">=</span><span class="n">gen</span><span class="p">)</span>
 </pre></div>
-<p>---</p>
 <div class="highlight"><pre><span class="nt">&lt;dt&gt;</span>
   <span class="cp">{{</span> <span class="nv">gen.label.open</span><span class="o">(</span><span class="nv">field</span><span class="o">)</span> <span class="cp">}}</span>
   <span class="cp">{{</span> <span class="nv">field.label</span> <span class="cp">}}</span>
@@ -871,9 +870,9 @@
 <li>Serializes data structures into queryable / indexable key-value store.</li>
 <li>Allows non-critical aspects of the schema to evolve over time with
 minimal obstacles and migration headaches.</li>
-<li>Allows us to store a whole value of <em>mostly</em> identical object types
+<li>Allows us to store a whole series of <em>mostly</em> identical object types
 in a single table.</li>
-<li>Mostly concerned with type conversion and marshalling, less so
+<li>Primarily concerned with type conversion and marshalling, less so
 with validation.</li>
 <li>Duck typing</li>
 <li>Sparse storage.</li>
@@ -881,7 +880,8 @@ with validation.</li>
 </div>
 <div class="slide" id="idealist-skeleton-schema">
 <h1>Idealist Skeleton Schema</h1>
-<div class="highlight"><pre><span class="n">ContentProperties</span> <span class="o">=</span> <span class="n">flatland</span><span class="o">.</span><span class="n">SparseDict</span><span class="o">.</span><span class="n">of</span><span class="p">(</span>
+<div class="highlight"><pre><span class="c"># Generated from a more PM friendly format</span>
+<span class="n">ContentProperties</span> <span class="o">=</span> <span class="n">flatland</span><span class="o">.</span><span class="n">SparseDict</span><span class="o">.</span><span class="n">of</span><span class="p">(</span>
   <span class="n">flatland</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&quot;access&quot;</span>
       <span class="p">)</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span><span class="n">converted</span><span class="p">)</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
   <span class="n">flatland</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&quot;access_other&quot;</span>
@@ -901,6 +901,11 @@ with validation.</li>
 <h1>Idealist Preference Schema</h1>
 <div class="highlight"><pre><span class="k">class</span> <span class="nc">PreferenceSchema</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Flatland schema describing preferences. &quot;&quot;&quot;</span>
+
+    <span class="c"># Setting policy to &#39;duck&#39; tells the form</span>
+    <span class="c"># to set values for any subset of input</span>
+    <span class="c"># keys that match the schema while ignoring</span>
+    <span class="c"># those that don&#39;t.</span>
     <span class="n">policy</span> <span class="o">=</span> <span class="s">&#39;duck&#39;</span>
 </pre></div>
 </div>
@@ -988,9 +993,11 @@ flatland elements.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight"><pre><span class="k">assert</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;name:monkeys&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;monkeys&quot;</span>
+<div class="highlight"><pre><span class="k">assert</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;name:monkeys&quot;</span>
+               <span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;monkeys&quot;</span>
 </pre></div>
-<div class="highlight"><pre><span class="k">assert</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;employees:jane&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;housing&quot;</span>
+<div class="highlight"><pre><span class="k">assert</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;employees:jane&quot;</span>
+               <span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;housing&quot;</span>
 </pre></div>
 </div>
 <div class="slide" id="xodb-for-more-information">
@@ -1090,6 +1097,10 @@ flatland elements.</p>
 <div class="line">Scott Wilson</div>
 <div class="line"><a class="reference external" href="mailto:scott&#64;idealist.org">scott&#64;idealist.org</a></div>
 <div class="line">&#64;swidealist</div>
+</div>
+<div class="line-block">
+<div class="line">Slides available for viewing at:  <a class="reference external" href="http://rswilson.ch/flatland/">http://rswilson.ch/flatland/</a></div>
+<div class="line">Github repository at: <a class="reference external" href="http://github.com/scooterXL/flatland-europython-2010">http://github.com/scooterXL/flatland-europython-2010</a></div>
 </div>
 <img alt="images/idealist.gif" src="images/idealist.gif" />
 </div>

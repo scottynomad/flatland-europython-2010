@@ -437,7 +437,7 @@ Custom Validator
 Validation Example - On Form
 ==============================
 
-.. inline-demo:: http://127.0.0.1:5000/passwords-form
+.. inline-demo:: demo/passwords-form
    :width: 350
    :height: 400
    :float: right
@@ -466,7 +466,7 @@ Validation Example - On Form
 Validation Example - On Element
 ================================
 
-.. inline-demo:: http://127.0.0.1:5000/passwords-element
+.. inline-demo:: demo/passwords-element
    :width: 350
    :height: 400
    :float: right
@@ -1143,6 +1143,11 @@ Thanks!
 | Scott Wilson
 | scott@idealist.org
 | @swidealist
+
+
+| Slides available for viewing at:  http://rswilson.ch/flatland/
+| Github repository at: http://github.com/scooterXL/flatland-europython-2010
+
 
 .. image:: images/idealist.gif
 
