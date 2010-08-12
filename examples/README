@@ -1,0 +1,31 @@
+Example from 'Form Processing with Flatland talk.'
+
+
+Run with irunner
+----------------
+
+custom_validator.py
+genshi_output.py
+xodb_example.py
+
+
+ex.  python ./irunner.py ./custom_validator.py
+
+
+Web app examples
+-----------------
+
+The canonical flask tutorial app flaskr ported to use
+flatland and with several extra talk example added.
+
+cd flaskr_flatland
+python ./runserver.py
+
+
+http://localhost:5000/register
+http://localhost:5000/passwords-form
+http://localhost:5000/passwords-element
+http://localhost:5000/contact (TODO: fix)
+
+
+

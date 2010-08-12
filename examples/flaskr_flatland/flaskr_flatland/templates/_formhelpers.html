@@ -1,0 +1,26 @@
+{% macro render_errors(field) %}
+  {% if field.errors %}
+    <ul class="error">
+      {% for error in field.errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}
+
+{% macro render_field(gen, field) %}
+  <dt>
+    {{ gen.label.open(field) }}
+    {{ field.label }}{% if not field.optional %}*{% endif %}
+    {{ gen.label.close() }}
+  </dt>
+  <dd>
+    {% if field.__class__.__name__ == 'Boolean' %}
+      {{ gen.input(field, type='checkbox')|safe }}
+    {% else %}
+      {{ gen.input(field)|safe }}
+    {% endif %}
+    {{ render_errors(field) }}
+  </dd>
+{% endmacro %}
+

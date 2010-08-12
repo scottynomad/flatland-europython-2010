@@ -1,0 +1,23 @@
+{% from "_formhelpers.html" import render_field, render_errors %}
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Contact</h2>
+  <form method="post">
+    <dl>
+      {{ render_field(generator, form['name']) }}
+      {% for address in form['addresses'] %}
+        {{ render_field(generator, address['street']) }}
+        {{ render_field(generator, address['city']) }}
+        {{ render_field(generator, address['country']) }}
+        {% for phone in addresses['phone_numbers'] %}
+          {{ render_field(generator, phone['label']) }}
+          {{ render_field(generator, phone['number']) }}
+        {% endfor %}
+      {% endfor %}
+    </dl>
+    <hr />
+    {{ render_errors(form) }}
+    <p><input type=submit value=Register>
+  </form>
+{% endblock body %}
+

@@ -1,0 +1,17 @@
+{% from "_formhelpers.html" import render_field, render_errors %}
+{% extends "layout.html" %}
+{% block body %}
+<h2>Please Register</h2>
+<form method="post" action="/register">
+  <dl>
+    {{ render_field(generator, form.username) }}
+    {{ render_field(generator, form.email) }}
+    {{ render_field(generator, form.password) }}
+    {{ render_field(generator, form.confirm) }}
+    {{ render_field(generator, form.accept_tos) }}
+  </dl>
+  {{ render_errors(form) }}
+  <p><input type=submit value=Register>
+</form>
+{% endblock body %}
+

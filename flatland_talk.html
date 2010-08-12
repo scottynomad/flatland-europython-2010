@@ -1,0 +1,1098 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
+<meta name="version" content="S5 1.1" />
+<title>Form Processing with Flatland</title>
+<meta name="author" content="Scott Wilson" />
+<meta name="date" content="21.07.2010" />
+<style type="text/css">
+
+.highlight .hll { background-color: #333333 }
+.highlight  { background: #111111; color: #ffffff }
+.highlight .c { color: #008800; font-style: italic; background-color: #0f140f } /* Comment */
+.highlight .err { color: #ffffff } /* Error */
+.highlight .g { color: #ffffff } /* Generic */
+.highlight .k { color: #fb660a; font-weight: bold } /* Keyword */
+.highlight .l { color: #ffffff } /* Literal */
+.highlight .n { color: #ffffff } /* Name */
+.highlight .o { color: #ffffff } /* Operator */
+.highlight .x { color: #ffffff } /* Other */
+.highlight .p { color: #ffffff } /* Punctuation */
+.highlight .cm { color: #008800; font-style: italic; background-color: #0f140f } /* Comment.Multiline */
+.highlight .cp { color: #ff0007; font-weight: bold; font-style: italic; background-color: #0f140f } /* Comment.Preproc */
+.highlight .c1 { color: #008800; font-style: italic; background-color: #0f140f } /* Comment.Single */
+.highlight .cs { color: #008800; font-style: italic; background-color: #0f140f } /* Comment.Special */
+.highlight .gd { color: #ffffff } /* Generic.Deleted */
+.highlight .ge { color: #ffffff } /* Generic.Emph */
+.highlight .gr { color: #ffffff } /* Generic.Error */
+.highlight .gh { color: #ffffff; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #ffffff } /* Generic.Inserted */
+.highlight .go { color: #444444; background-color: #222222 } /* Generic.Output */
+.highlight .gp { color: #ffffff } /* Generic.Prompt */
+.highlight .gs { color: #ffffff } /* Generic.Strong */
+.highlight .gu { color: #ffffff; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #ffffff } /* Generic.Traceback */
+.highlight .kc { color: #fb660a; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #fb660a; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #fb660a; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #fb660a } /* Keyword.Pseudo */
+.highlight .kr { color: #fb660a; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #cdcaa9; font-weight: bold } /* Keyword.Type */
+.highlight .ld { color: #ffffff } /* Literal.Date */
+.highlight .m { color: #0086f7; font-weight: bold } /* Literal.Number */
+.highlight .s { color: #0086d2 } /* Literal.String */
+.highlight .na { color: #ff0086; font-weight: bold } /* Name.Attribute */
+.highlight .nb { color: #ffffff } /* Name.Builtin */
+.highlight .nc { color: #ffffff } /* Name.Class */
+.highlight .no { color: #0086d2 } /* Name.Constant */
+.highlight .nd { color: #ffffff } /* Name.Decorator */
+.highlight .ni { color: #ffffff } /* Name.Entity */
+.highlight .ne { color: #ffffff } /* Name.Exception */
+.highlight .nf { color: #ff0086; font-weight: bold } /* Name.Function */
+.highlight .nl { color: #ffffff } /* Name.Label */
+.highlight .nn { color: #ffffff } /* Name.Namespace */
+.highlight .nx { color: #ffffff } /* Name.Other */
+.highlight .py { color: #ffffff } /* Name.Property */
+.highlight .nt { color: #fb660a; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #fb660a } /* Name.Variable */
+.highlight .ow { color: #ffffff } /* Operator.Word */
+.highlight .w { color: #888888 } /* Text.Whitespace */
+.highlight .mf { color: #0086f7; font-weight: bold } /* Literal.Number.Float */
+.highlight .mh { color: #0086f7; font-weight: bold } /* Literal.Number.Hex */
+.highlight .mi { color: #0086f7; font-weight: bold } /* Literal.Number.Integer */
+.highlight .mo { color: #0086f7; font-weight: bold } /* Literal.Number.Oct */
+.highlight .sb { color: #0086d2 } /* Literal.String.Backtick */
+.highlight .sc { color: #0086d2 } /* Literal.String.Char */
+.highlight .sd { color: #0086d2 } /* Literal.String.Doc */
+.highlight .s2 { color: #0086d2 } /* Literal.String.Double */
+.highlight .se { color: #0086d2 } /* Literal.String.Escape */
+.highlight .sh { color: #0086d2 } /* Literal.String.Heredoc */
+.highlight .si { color: #0086d2 } /* Literal.String.Interpol */
+.highlight .sx { color: #0086d2 } /* Literal.String.Other */
+.highlight .sr { color: #0086d2 } /* Literal.String.Regex */
+.highlight .s1 { color: #0086d2 } /* Literal.String.Single */
+.highlight .ss { color: #0086d2 } /* Literal.String.Symbol */
+.highlight .bp { color: #ffffff } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #fb660a } /* Name.Variable.Class */
+.highlight .vg { color: #fb660a } /* Name.Variable.Global */
+.highlight .vi { color: #fb660a } /* Name.Variable.Instance */
+.highlight .il { color: #0086f7; font-weight: bold } /* Literal.Number.Integer.Long */
+
+</style>
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<script src="ui/small-black/slides.js" type="text/javascript"></script>
+<link rel="stylesheet" href="ui/small-black/slides.css"
+      type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/small-black/outline.css"
+      type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/small-black/print.css"
+      type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/small-black/opera.css"
+      type="text/css" media="projection" id="operaFix" />
+
+<style type="text/css">
+#currentSlide {display: none;}
+</style>
+</head>
+<body>
+<div class="layout">
+<div id="controls"></div>
+<div id="currentSlide"></div>
+<div id="header">
+
+</div>
+<div id="footer">
+<h1>Form Processing with <em>Flatland</em></h1>
+<h2>Europython 2010, Birmingham - <a class="reference external" href="http://discorporate.us/projects/flatland/">http://discorporate.us/projects/flatland/</a></h2>
+</div>
+</div>
+<div class="presentation">
+<div class="slide" id="slide0">
+<h1 class="title">Form Processing with <em>Flatland</em></h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr><th class="docinfo-name">Author:</th>
+<td><strong class="first last">Scott Wilson</strong></td></tr>
+<tr class="field"><th class="docinfo-name">email:</th><td class="field-body"><a class="reference external" href="mailto:scott&#64;idealist.org">scott&#64;idealist.org</a></td>
+</tr>
+<tr><th class="docinfo-name">Date:</th>
+<td>21.07.2010</td></tr>
+</tbody>
+</table>
+<!-- Definitions of interpreted text roles (classes) for S5/HTML data. -->
+<!-- This data file has been placed in the public domain. -->
+<!-- Colours
+======= -->
+<!-- Text Sizes
+========== -->
+<!-- Display in Slides (Presentation Mode) Only
+========================================== -->
+<!-- Display in Outline Mode Only
+============================ -->
+<!-- Display in Print Only
+===================== -->
+<!-- Display in Handout Mode Only
+============================ -->
+<!-- Incremental Display
+=================== -->
+<img alt="images/idealist.gif" class="center" src="images/idealist.gif" />
+
+</div>
+<div class="slide" id="the-plan">
+<h1>The Plan</h1>
+<ul class="simple">
+<li>Quick statement of the problem</li>
+<li>The gory details on using flatland</li>
+<li>Some interesting applications and future directions</li>
+</ul>
+</div>
+<div class="slide" id="forms">
+<h1>Forms?</h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="images/github.jpg" class="center" src="images/github.jpg" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="images/guardian.jpg" src="images/guardian.jpg" />
+</div>
+<div class="slide" id="webkit-inspector-very-useful">
+<h1>WebKit Inspector - Very Useful!</h1>
+<img alt="images/headers.jpg" src="images/headers.jpg" />
+</div>
+<div class="slide" id="form-processing">
+<h1>Form Processing?</h1>
+<p><span class="incremental">1. Type Conversion</span></p>
+<p><span class="incremental">2. Validation</span></p>
+<p><span class="incremental">3. Processing / Storage</span></p>
+<p><span class="incremental">4. Redisplay</span></p>
+</div>
+<div class="slide" id="type-conversion">
+<h1>1. Type Conversion</h1>
+<div class="highlight"><pre><span class="s">&#39;1&#39;</span>          <span class="o">=&gt;</span> <span class="mi">1</span>
+<span class="s">&#39;1999-12-31&#39;</span> <span class="o">=&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1999</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="s">&#39;yes&#39;</span>        <span class="o">=&gt;</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<div class="slide" id="validation">
+<h1>2. Validation</h1>
+<ul class="simple">
+<li><span class="incremental">Was value type-converted successfully?</span></li>
+<li><span class="incremental">Is date valid?</span></li>
+<li><span class="incremental">Is page number &gt; 0 ?</span></li>
+<li><span class="incremental">Is email address in a valid format?</span></li>
+<li><span class="incremental">Does a confirmation field match its pair?</span></li>
+</ul>
+</div>
+<div class="slide" id="processing-storage">
+<h1>3. Processing / Storage</h1>
+<ul class="simple">
+<li><span class="incremental">Trigger an API call</span></li>
+<li><span class="incremental">Populate a model object and store it in a database</span></li>
+<li><span class="incremental">Kick off some asynchronous processing.</span></li>
+<li><span class="incremental">Generate a search result</span></li>
+<li><span class="incremental">...</span></li>
+</ul>
+</div>
+<div class="slide" id="redisplay">
+<h1>4. Redisplay</h1>
+<ul class="simple">
+<li><span class="incremental">Populate a form from model object or other data source</span></li>
+<li><span class="incremental">Redisplay the submitted form data with validation feedback</span></li>
+</ul>
+</div>
+<div class="slide" id="other-related-tools">
+<h1>Other Related Tools</h1>
+<ul class="simple">
+<li>WTForms</li>
+<li>Django</li>
+<li>FormEncode</li>
+<li>FormBuilder</li>
+<li>Lots of others</li>
+</ul>
+</div>
+<div class="slide" id="what-is-flatland">
+<h1>What is Flatland?</h1>
+<p>A schema-driven mapping toolkit providing:</p>
+<ul class="simple">
+<li><span class="incremental">Transformation of data between flat key-value representations and rich python data structures.</span></li>
+<li><span class="incremental">Optional validation of the state of the form regardless of where the data originated.</span></li>
+<li><span class="incremental">Declarative schema decription language</span></li>
+<li><span class="incremental">Support for arbitrily complex structures</span></li>
+</ul>
+</div>
+<div class="slide" id="simple-example">
+<h1>Simple example</h1>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">flatland</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Float</span>
+
+<span class="n">MySpot</span> <span class="o">=</span> <span class="n">Dict</span><span class="o">.</span><span class="n">of</span><span class="p">(</span>
+    <span class="n">Float</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;latitude&#39;</span><span class="p">),</span>
+    <span class="n">Float</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;longitude&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="slide" id="simple-example-declarative">
+<h1>Simple example - Declarative</h1>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">flatland</span> <span class="kn">import</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Form</span>
+
+<span class="k">class</span> <span class="nc">MySpot</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">latitude</span> <span class="o">=</span> <span class="n">Float</span>
+    <span class="n">longitude</span> <span class="o">=</span> <span class="n">Float</span>
+</pre></div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><strong>Form</strong> is a sublcass of <strong>Dict</strong> that adds the declarative syntax.</p>
+<p><em>Note that the latitude and longitude properties of MySpot are ultimately removed.</em></p>
+</div>
+<div class="slide" id="setting-values">
+<h1>Setting values</h1>
+<div class="highlight"><pre><span class="c"># By passing a dictionary to the constructor</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">el</span> <span class="o">=</span> <span class="n">MySpot</span><span class="p">({</span><span class="s">&#39;latitude&#39;</span><span class="p">:</span> <span class="mf">52.48</span><span class="p">,</span> <span class="s">&#39;longitude&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.89</span><span class="p">})</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">el</span>
+<span class="p">{</span><span class="s">u&#39;latitude&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Float</span> <span class="s">u&#39;latitude&#39;</span><span class="p">;</span> <span class="n">value</span><span class="o">=</span><span class="mf">52.48</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="s">u&#39;longitude&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Float</span> <span class="s">u&#39;longitude&#39;</span><span class="p">;</span> <span class="n">value</span><span class="o">=-</span><span class="mf">1.89</span><span class="o">&gt;</span><span class="p">}</span>
+
+<span class="c"># Check the native python value</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">el</span><span class="o">.</span><span class="n">value</span>
+<span class="p">{</span><span class="s">u&#39;latitude&#39;</span><span class="p">:</span> <span class="mf">52.48</span><span class="p">,</span> <span class="s">u&#39;longitude&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.89</span><span class="p">}</span>
+
+<span class="c"># Set values on an existing instance using .set</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">el</span><span class="o">.</span><span class="n">set</span><span class="p">({</span><span class="s">&#39;latitude&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;longitude&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">})</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">el</span><span class="o">.</span><span class="n">value</span>
+<span class="p">{</span><span class="s">u&#39;latitude&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">u&#39;longitude&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="slide" id="flattening-values">
+<h1>Flattening values</h1>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">el</span> <span class="o">=</span> <span class="n">MySpot</span><span class="p">({</span><span class="s">&#39;latitude&#39;</span><span class="p">:</span> <span class="mf">52.48</span><span class="p">,</span> <span class="s">&#39;longitude&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.89</span><span class="p">})</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">el</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="p">[(</span><span class="s">u&#39;latitude&#39;</span><span class="p">,</span> <span class="s">u&#39;52.480000&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s">u&#39;longitude&#39;</span><span class="p">,</span> <span class="s">u&#39;-1.890000&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="slide" id="setting-values-from-objects">
+<h1>Setting values from objects</h1>
+<div class="highlight"><pre><span class="c"># Simple point object</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Point</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;Point&#39;</span><span class="p">,</span> <span class="s">&#39;latitude&#39;</span><span class="p">,</span> <span class="s">&#39;longitude&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">pt</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mf">52.48</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.89</span><span class="p">)</span>
+
+<span class="c"># Construct using from_object factory method</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">el</span> <span class="o">=</span> <span class="n">MySpot</span><span class="o">.</span><span class="n">from_object</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span>
+
+<span class="c"># python value</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">el</span><span class="o">.</span><span class="n">value</span>
+<span class="p">{</span><span class="s">u&#39;latitude&#39;</span><span class="p">:</span> <span class="mf">52.48</span><span class="p">,</span> <span class="s">u&#39;longitude&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.89</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="slide" id="default-values">
+<h1>Default Values</h1>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">flatland</span> <span class="kn">import</span> <span class="n">Form</span><span class="p">,</span> <span class="n">DateTime</span><span class="p">,</span> <span class="n">Integer</span>
+
+<span class="k">class</span> <span class="nc">GroceryList</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">eggs</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">due</span> <span class="o">=</span> <span class="n">DateTime</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+<span class="c"># Construct using the from_defaults factory method</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">GroceryList</span><span class="o">.</span><span class="n">from_defaults</span><span class="p">()</span><span class="o">.</span><span class="n">value</span>
+<span class="p">{</span><span class="s">u&#39;eggs&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+ <span class="s">u&#39;due&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">812918</span><span class="p">)}</span>
+</pre></div>
+</div>
+<div class="slide" id="to-and-from-flat">
+<h1>To and From Flat</h1>
+<div class="highlight"><pre><span class="c"># Construct using the from_flat factory method</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gl</span> <span class="o">=</span> <span class="n">GroceryList</span><span class="o">.</span><span class="n">from_flat</span><span class="p">(</span>
+        <span class="p">[(</span><span class="s">&#39;eggs&#39;</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;due&#39;</span><span class="p">,</span> <span class="s">&#39;2010-07-20 23:04:00&#39;</span><span class="p">)]</span>
+    <span class="p">)</span>
+
+<span class="c"># Native python value</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gl</span><span class="o">.</span><span class="n">value</span>
+<span class="p">{</span><span class="s">u&#39;eggs&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s">u&#39;due&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">4</span><span class="p">)}</span>
+
+<span class="c"># Flat value</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gl</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="p">[(</span><span class="s">u&#39;eggs&#39;</span><span class="p">,</span> <span class="s">u&#39;9&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">u&#39;due&#39;</span><span class="p">,</span> <span class="s">u&#39;2010-07-20 23:04:00&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="slide" id="slice">
+<h1>Slice</h1>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">gl</span> <span class="o">=</span> <span class="n">GroceryList</span><span class="p">({</span><span class="s">&#39;eggs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s">&#39;due&#39;</span><span class="p">:</span> <span class="s">&#39;1997-01-01&#39;</span><span class="p">})</span>
+
+<span class="c"># Only pull out eggs</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gl</span><span class="o">.</span><span class="n">slice</span><span class="p">([</span><span class="s">&#39;eggs&#39;</span><span class="p">])</span>
+<span class="p">{</span><span class="s">u&#39;eggs&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">}</span>
+
+<span class="c"># Omit due and rename eggs as huevos</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gl</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="n">omit</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;due&#39;</span><span class="p">],</span> <span class="n">rename</span><span class="o">=</span><span class="p">[(</span><span class="s">&#39;eggs&#39;</span><span class="p">,</span> <span class="s">&#39;huevos&#39;</span><span class="p">)])</span>
+<span class="p">{</span><span class="s">&#39;huevos&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="slide" id="elements">
+<h1>Elements</h1>
+<div class="highlight"><pre><span class="c"># Construct</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Num</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;anumber&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Num</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">Integer</span> <span class="s">u&#39;anumber&#39;</span><span class="p">;</span> <span class="n">value</span><span class="o">=</span><span class="mi">4</span><span class="o">&gt;</span>
+
+<span class="c"># Get native python value</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Num</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+<span class="mi">4</span>
+
+<span class="c"># Get unicode value</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Num</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">u</span>
+<span class="s">u&#39;4&#39;</span>
+</pre></div>
+</div>
+<div class="slide" id="elements-work-just-like-forms">
+<h1>Elements - Work just like Forms</h1>
+<div class="highlight"><pre><span class="c"># Construct</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Num</span><span class="o">.</span><span class="n">from_flat</span><span class="p">([(</span><span class="s">&#39;anumber&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">)])</span>
+<span class="o">&lt;</span><span class="n">Integer</span> <span class="s">u&#39;anumber&#39;</span><span class="p">;</span> <span class="n">value</span><span class="o">=</span><span class="mi">4</span><span class="o">&gt;</span>
+
+<span class="c"># Flatten</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Num</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="p">[(</span><span class="s">u&#39;anumber&#39;</span><span class="p">,</span> <span class="s">u&#39;4&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="slide" id="scalar-element-types">
+<h1>Scalar Element Types</h1>
+<ul class="simple">
+<li>Boolean</li>
+<li>Date</li>
+<li>DateTime</li>
+<li>Decimal</li>
+<li>Enum</li>
+<li>Float</li>
+<li>Integer</li>
+<li>Long</li>
+<li>String</li>
+<li>Time</li>
+</ul>
+</div>
+<div class="slide" id="container-element-types">
+<h1>Container Element Types</h1>
+<ul class="simple">
+<li>Array</li>
+<li>Dict</li>
+<li>List</li>
+<li>MultiValue</li>
+<li>SparseDict</li>
+</ul>
+</div>
+<div class="slide" id="compound-element-types">
+<h1>Compound Element Types</h1>
+<ul class="simple">
+<li>DateYYYYMMDD</li>
+<li>JoinedString</li>
+<li>... so far</li>
+</ul>
+</div>
+<div class="slide" id="validation-converted">
+<h1>Validation - Converted</h1>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">flatland</span> <span class="kn">import</span> <span class="n">Integer</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">flatland.validation</span> <span class="kn">import</span> <span class="n">Converted</span>
+
+<span class="c"># With an input that can be coerced to an integer</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">nn</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="s">&#39;123&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Converted</span><span class="p">()</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span> <span class="p">{})</span>
+<span class="bp">True</span>
+
+<span class="c"># With an input that *cannot* be coerced to an integer</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">nn</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="s">&#39;abc&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Converted</span><span class="p">()</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span> <span class="p">{})</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">errors</span>
+<span class="p">[</span><span class="s">u&#39;None is not correct.&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="slide" id="validation-present">
+<h1>Validation - Present</h1>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">flatland</span> <span class="kn">import</span> <span class="n">Integer</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">flatland.validation</span> <span class="kn">import</span> <span class="n">Present</span>
+
+<span class="c"># Present validates on any value (e.g. an invalid email address)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">nn</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="s">&#39;abc&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Present</span><span class="p">()</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span> <span class="p">{})</span>
+<span class="bp">True</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">nn</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;quantity&#39;</span><span class="p">)()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Present</span><span class="p">()</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span> <span class="p">{})</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">errors</span>
+<span class="p">[</span><span class="s">&#39;quantity may not be blank.&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="slide" id="validation-optional-flag">
+<h1>Validation - optional flag</h1>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">flatland</span> <span class="kn">import</span> <span class="n">Integer</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">flatland.validation</span> <span class="kn">import</span> <span class="n">Present</span>
+
+<span class="c"># With optional=False (default)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">MyInt</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span><span class="n">Present</span><span class="p">())</span>\
+                   <span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">MyInt</span><span class="p">()</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+<span class="bp">False</span>
+
+<span class="c"># With optional=True</span>
+<span class="c"># validators are not evaluated when value == None</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">MyInt</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span><span class="n">Present</span><span class="p">())</span>\
+                   <span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">MyInt</span><span class="p">()</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+<span class="bp">True</span>
+</pre></div>
+</div>
+<div class="slide" id="validation-error-messges">
+<h1>Validation - Error Messges</h1>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">nn</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">()</span>
+<span class="c"># Override the error message for the</span>
+<span class="c"># *missing* failure mode in the constructor.</span>
+<span class="c"># Some validators encapsulate multiple</span>
+<span class="c"># failure modes.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Present</span><span class="p">(</span><span class="n">missing</span><span class="o">=</span><span class="s">&#39;Where is it??&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span> <span class="p">{})</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">nn</span><span class="o">.</span><span class="n">errors</span>
+<span class="p">[</span><span class="s">&#39;Where is it??&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="slide" id="validators-scalars">
+<h1>Validators - Scalars</h1>
+<ul class="simple">
+<li>ValueBetwen</li>
+<li>LengthBetween</li>
+<li>ValueGreaterThan</li>
+<li>ValuesEqual</li>
+<li>IsTrue</li>
+<li>IsFalse</li>
+<li>IsEmail</li>
+<li>URLValidator</li>
+<li>...</li>
+</ul>
+</div>
+<div class="slide" id="validators-container">
+<h1>Validators - Container</h1>
+<ul class="simple">
+<li>HasAtLeast</li>
+<li>HasAtMost</li>
+<li>NotDuplicated</li>
+</ul>
+</div>
+<div class="slide" id="custom-validator">
+<h1>Custom Validator</h1>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">ValidWikiName</span><span class="p">(</span><span class="n">Validator</span><span class="p">):</span>
+    <span class="n">fail</span> <span class="o">=</span> <span class="n">N_</span><span class="p">(</span><span class="s">&#39;A wiki name is only valid when the ...&#39;</span><span class="p">)</span>
+
+    <span class="n">name_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;^[A-Z][a-z]\w*$&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">u</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">note_error</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="s">&#39;fail&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<div class="slide" id="validation-example-on-form">
+<h1>Validation Example - On Form</h1>
+<iframe src="http://127.0.0.1:5000/passwords-form" width="350" height="400"style="float: right"></iframe><div class="highlight"><pre><span class="k">class</span> <span class="nc">PasswordCompareForm</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="n">using</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s">&#39;New Password&#39;</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">Present</span><span class="p">(),</span>
+            <span class="n">LengthBetween</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+        <span class="p">])</span>
+    <span class="n">confirm</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="n">using</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s">&#39;Repeat Password&#39;</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">Present</span><span class="p">()]</span>
+    <span class="p">)</span>
+    <span class="n">validators</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">ValuesEqual</span><span class="p">(</span>
+            <span class="s">&#39;password&#39;</span><span class="p">,</span>
+            <span class="s">&#39;confirm&#39;</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+</pre></div>
+</div>
+<div class="slide" id="validation-example-on-element">
+<h1>Validation Example - On Element</h1>
+<iframe src="http://127.0.0.1:5000/passwords-element" width="350" height="400"style="float: right"></iframe><div class="highlight"><pre><span class="k">class</span> <span class="nc">PasswordCompareElement</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="n">using</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s">&#39;New Password&#39;</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">Present</span><span class="p">(),</span>
+            <span class="n">LengthBetween</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">confirm</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="n">using</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s">&#39;Repeat Password&#39;</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">Present</span><span class="p">(),</span>
+            <span class="n">ValuesEqual</span><span class="p">(</span>
+                <span class="s">&#39;.&#39;</span><span class="p">,</span>
+                <span class="s">&#39;../password&#39;</span>
+            <span class="p">)]</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<div class="slide" id="nested-structure">
+<h1>Nested Structure</h1>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">ContactForm</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span><span class="n">Present</span><span class="p">())</span>
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="n">of</span><span class="p">(</span>
+        <span class="n">Dict</span><span class="o">.</span><span class="n">of</span><span class="p">(</span>
+            <span class="n">String</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;street&#39;</span><span class="p">),</span>
+            <span class="n">String</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;city&#39;</span><span class="p">),</span>
+            <span class="n">String</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;country&#39;</span><span class="p">),</span>
+            <span class="n">List</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;phone_numbers&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">of</span><span class="p">(</span>
+                <span class="n">Dict</span><span class="o">.</span><span class="n">of</span><span class="p">(</span>
+                    <span class="n">String</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;label&#39;</span><span class="p">),</span>
+                    <span class="n">String</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;number&#39;</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="slide" id="nested-structure-nested-forms">
+<h1>Nested Structure - Nested Forms</h1>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">PhoneNumber</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">String</span>
+    <span class="n">number</span> <span class="o">=</span> <span class="n">String</span>
+
+<span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">street</span> <span class="o">=</span> <span class="n">String</span>
+    <span class="n">city</span> <span class="o">=</span> <span class="n">String</span>
+    <span class="n">country</span> <span class="o">=</span> <span class="n">String</span>
+    <span class="n">phone_numbers</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">PhoneNumber</span>
+                            <span class="p">)</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ContactForm</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span><span class="n">Present</span><span class="p">())</span>
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">Address</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="slide" id="path-lookup">
+<h1>Path Lookup</h1>
+<div class="highlight"><pre><span class="n">form</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;/name&#39;</span><span class="p">)</span>
+
+<span class="n">form</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;addresses[0]&#39;</span><span class="p">)</span>
+
+<span class="n">form</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;addresses[0]/phone_numbers[0]/number&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="slide" id="flattening-nested-structures">
+<h1>Flattening Nested Structures</h1>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">el</span> <span class="o">=</span> <span class="n">ContactForm</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;John&#39;</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">el</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="p">[(</span><span class="s">u&#39;name&#39;</span><span class="p">,</span> <span class="s">u&#39;John&#39;</span><span class="p">)]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">el</span><span class="p">[</span><span class="s">&#39;addresses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;street&#39;</span><span class="p">:</span> <span class="s">&#39;123 Bay St.&#39;</span><span class="p">,</span>
+                        <span class="s">&#39;city&#39;</span><span class="p">:</span>   <span class="s">&#39;Toronto&#39;</span><span class="p">,</span>
+                        <span class="s">&#39;country&#39;</span><span class="p">:</span> <span class="s">&#39;CA&#39;</span><span class="p">,</span>
+                        <span class="s">&#39;phone_numbers&#39;</span><span class="p">:</span> <span class="p">[]}]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">el</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="p">[(</span><span class="s">u&#39;name&#39;</span><span class="p">,</span> <span class="s">u&#39;John&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s">u&#39;addresses_0_street&#39;</span><span class="p">,</span> <span class="s">u&#39;123 Bay St.&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s">u&#39;addresses_0_city&#39;</span><span class="p">,</span> <span class="s">u&#39;Toronto&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s">u&#39;addresses_0_country&#39;</span><span class="p">,</span> <span class="s">u&#39;CA&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="slide" id="defaults-factory-for-nested-schema">
+<h1>Defaults factory for Nested Schema</h1>
+<ul class="simple">
+<li>Useful when populating a template rendering context for a clean web form</li>
+</ul>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">el</span><span class="o">.</span><span class="n">ContactForm</span><span class="o">.</span><span class="n">from_defaults</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">el</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="p">[(</span><span class="s">u&#39;name&#39;</span><span class="p">,</span> <span class="s">u&#39;&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">u&#39;addresses_0_city&#39;</span><span class="p">,</span> <span class="s">u&#39;&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s">u&#39;addresses_0_street&#39;</span><span class="p">,</span> <span class="s">u&#39;&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s">u&#39;addresses_0_country&#39;</span><span class="p">,</span> <span class="s">u&#39;&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s">u&#39;addresses_0_phone_numbers_0_number&#39;</span><span class="p">,</span> <span class="s">u&#39;&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s">u&#39;addresses_0_phone_numbers_0_label&#39;</span><span class="p">,</span> <span class="s">u&#39;&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="slide" id="output-generation">
+<h1>Output Generation</h1>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">flatland</span> <span class="kn">import</span> <span class="n">String</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">flatland.out.markup</span> <span class="kn">import</span> <span class="n">Generator</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">field</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;eggs&#39;</span><span class="p">)(</span><span class="s">&#39;brown&#39;</span><span class="p">)</span>
+<span class="c"># Construct a markup generator</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gen</span> <span class="o">=</span> <span class="n">Generator</span><span class="p">()</span>
+
+<span class="c"># Render field as an input tag</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gen</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+<span class="s">u&#39;&lt;input name=&quot;eggs&quot; value=&quot;brown&quot; /&gt;&#39;</span>
+
+<span class="c"># Generate dom ids when rendering</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gen</span><span class="p">[</span><span class="s">&#39;auto_domid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gen</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+<span class="s">u&#39;&lt;input name=&quot;eggs&quot; value=&quot;brown&quot; id=&quot;f_eggs&quot; /&gt;&#39;</span>
+</pre></div>
+</div>
+<div class="slide" id="output-generation-labels">
+<h1>Output Generation - Labels</h1>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">field</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;eggs&#39;</span><span class="p">)(</span><span class="s">&#39;brown&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gen</span> <span class="o">=</span> <span class="n">Generator</span><span class="p">(</span><span class="n">auto_for</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># Render explicit open ...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gen</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+<span class="s">u&#39;&lt;label for=&quot;f_eggs&quot;&gt;&#39;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gen</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+<span class="s">u&#39;&lt;input name=&quot;eggs&quot; value=&quot;brown&quot; /&gt;&#39;</span>
+
+<span class="c"># ... and close tags for wrapping tags</span>
+<span class="c"># (e.g. label, form, textarea)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gen</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="s">u&#39;&lt;/label&gt;&#39;</span>
+</pre></div>
+</div>
+<div class="slide" id="output-generation-tabindex">
+<h1>Output Generation - tabindex</h1>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">field</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;eggs&#39;</span><span class="p">)(</span><span class="s">&#39;brown&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gen</span> <span class="o">=</span> <span class="n">Generator</span><span class="p">(</span><span class="n">auto_tabindex</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tabindex</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gen</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+<span class="s">u&#39;&lt;input name=&quot;eggs&quot; value=&quot;brown&quot; tabindex=&quot;1&quot; /&gt;&#39;</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gen</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+<span class="s">u&#39;&lt;input name=&quot;eggs&quot; value=&quot;brown&quot; tabindex=&quot;2&quot; /&gt;&#39;</span>
+</pre></div>
+</div>
+<div class="slide" id="output-generation-options">
+<h1>Output Generation Options</h1>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">Generator</span><span class="p">()</span>
+<span class="n">Generator</span><span class="p">({</span>
+    <span class="s">u&#39;auto_filter&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">u&#39;markup_wrapper&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">flatland</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">generic</span><span class="o">.</span><span class="n">Markup</span><span class="s">&#39;&gt;,</span>
+    <span class="s">u&#39;auto_domid&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">u&#39;ordered_attributes&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">u&#39;auto_name&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">u&#39;auto_tabindex&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">u&#39;auto_for&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s">u&#39;filters&#39;</span><span class="p">:</span> <span class="p">(),</span>
+    <span class="s">u&#39;auto_value&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">u&#39;tabindex&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s">u&#39;domid_format&#39;</span><span class="p">:</span> <span class="s">u&#39;f_</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="slide" id="output-filters">
+<h1>Output filters</h1>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">flatland</span> <span class="kn">import</span> <span class="n">Integer</span>
+<span class="kn">from</span> <span class="nn">flatland.out.markup</span> <span class="kn">import</span> <span class="n">Generator</span>
+
+<span class="k">def</span> <span class="nf">error_filter</span><span class="p">(</span><span class="n">tagname</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">contents</span><span class="p">,</span>
+                 <span class="n">context</span><span class="p">,</span> <span class="n">bind</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;When we encounter a bind element</span>
+<span class="sd">       having errors, set the rendered</span>
+<span class="sd">       tag&#39;s class property to &#39;error&#39;.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">bind</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">bind</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
+        <span class="n">attrs</span><span class="p">[</span><span class="s">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;error&#39;</span>
+    <span class="k">return</span> <span class="n">contents</span>
+<span class="c"># Bind error_filter to input tags generation</span>
+<span class="n">error_filter</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">,)</span>
+</pre></div>
+</div>
+<div class="slide" id="output-filters-cont-d">
+<h1>Output filters - cont'd</h1>
+<div class="highlight"><pre><span class="n">gen</span> <span class="o">=</span> <span class="n">Generator</span><span class="p">(</span><span class="n">auto_filter</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                <span class="n">filters</span><span class="o">=</span><span class="p">[</span><span class="n">error_filter</span><span class="p">])</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">num</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span><span class="n">Converted</span><span class="p">())(</span><span class="s">&#39;abc&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">num</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">num</span><span class="o">.</span><span class="n">errors</span>
+<span class="p">[</span><span class="s">u&#39;None is not correct.&#39;</span><span class="p">]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">gen</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+<span class="s">u&#39;&lt;input value=&quot;abc&quot; class=&quot;error&quot; /&gt;&#39;</span>
+</pre></div>
+</div>
+<div class="slide" id="output-generation-jinja2">
+<h1>Output Generation - Jinja2</h1>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">flatland.out.markup</span> <span class="kn">import</span> <span class="n">Generator</span>
+<span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">Markup</span>
+<span class="n">gen</span> <span class="o">=</span> <span class="n">Generator</span><span class="p">(</span><span class="n">markup_wrapper</span><span class="o">=</span><span class="n">Markup</span><span class="p">)</span>
+<span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;password.html&#39;</span><span class="p">,</span>
+                       <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span> <span class="n">generator</span><span class="o">=</span><span class="n">gen</span><span class="p">)</span>
+</pre></div>
+<p>---</p>
+<div class="highlight"><pre><span class="nt">&lt;dt&gt;</span>
+  <span class="cp">{{</span> <span class="nv">gen.label.open</span><span class="o">(</span><span class="nv">field</span><span class="o">)</span> <span class="cp">}}</span>
+  <span class="cp">{{</span> <span class="nv">field.label</span> <span class="cp">}}</span>
+  <span class="cp">{{</span> <span class="nv">gen.label.close</span><span class="o">()</span> <span class="cp">}}</span>
+<span class="nt">&lt;/dt&gt;</span>
+<span class="nt">&lt;dd&gt;</span>
+  <span class="cp">{{</span> <span class="nv">gen.input</span><span class="o">(</span><span class="nv">field</span><span class="o">)</span> <span class="cp">}}</span>
+<span class="nt">&lt;/dd&gt;</span>
+</pre></div>
+</div>
+<div class="slide" id="output-generation-jinja2-cont-d">
+<h1>Output Generation - Jinja2 (cont'd)</h1>
+<div class="highlight"><pre><span class="cp">{%</span> <span class="k">macro</span> <span class="nv">render_errors</span><span class="o">(</span><span class="nv">field</span><span class="o">)</span> <span class="cp">%}</span>
+  <span class="cp">{%</span> <span class="k">if</span> <span class="nv">field.errors</span> <span class="cp">%}</span>
+    <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;error&quot;</span><span class="nt">&gt;</span>
+      <span class="cp">{%</span> <span class="k">for</span> <span class="nv">error</span> <span class="k">in</span> <span class="nv">field.errors</span> <span class="cp">%}</span>
+        <span class="nt">&lt;li&gt;</span><span class="cp">{{</span> <span class="nv">error</span> <span class="cp">}}</span><span class="nt">&lt;/li&gt;</span>
+      <span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">endmacro</span> <span class="cp">%}</span>
+</pre></div>
+<hr class="docutils" />
+<p>An Extension in progress to easy integration of flatland with flask.</p>
+</div>
+<div class="slide" id="genshi-output-template">
+<h1>Genshi Output - Template</h1>
+<div class="highlight"><pre><span class="nt">&lt;form</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
+      <span class="na">xmlns:py=</span><span class="s">&quot;http://genshi.edgewall.org/&quot;</span>
+      <span class="na">xmlns:form=</span><span class="s">&quot;http://ns.discorporate.us/flatland/genshi&quot;</span>
+      <span class="na">form:bind=</span><span class="s">&quot;form&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;form:with</span> <span class="na">auto_domid=</span><span class="s">&quot;on&quot;</span> <span class="na">auto_for=</span><span class="s">&quot;on&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">py:with=</span><span class="s">&quot;</span><span class="n">el</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">password</span><span class="s">&quot;</span> <span class="na">form:bind=</span><span class="s">&quot;el&quot;</span><span class="nt">&gt;</span>
+      <span class="cp">${</span><span class="n">el</span><span class="o">.</span><span class="n">label</span><span class="cp">}</span>: <span class="nt">&lt;input</span> <span class="na">form:bind=</span><span class="s">&quot;el&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/label&gt;</span>
+
+    <span class="nt">&lt;label</span> <span class="na">py:with=</span><span class="s">&quot;</span><span class="n">el</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">confirm</span><span class="s">&quot;</span> <span class="na">form:bind=</span><span class="s">&quot;el&quot;</span><span class="nt">&gt;</span>
+      <span class="cp">${</span><span class="n">el</span><span class="o">.</span><span class="n">label</span><span class="cp">}</span>: <span class="nt">&lt;input</span> <span class="na">form:bind=</span><span class="s">&quot;el&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/label&gt;</span>
+
+    <span class="nt">&lt;button</span> <span class="na">value=</span><span class="s">&quot;Submit&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/form:with&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre></div>
+</div>
+<div class="slide" id="genshi-output-result">
+<h1>Genshi Output - Result</h1>
+<div class="highlight"><pre><span class="nt">&lt;form</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;f_password&quot;</span><span class="nt">&gt;</span>
+      New Password:
+      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;password&quot;</span> <span class="na">value=</span><span class="s">&quot;&quot;</span> <span class="na">id=</span><span class="s">&quot;f_password&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;f_confirm&quot;</span><span class="nt">&gt;</span>
+      Repeat Password:
+      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;confirm&quot;</span> <span class="na">value=</span><span class="s">&quot;&quot;</span> <span class="na">id=</span><span class="s">&quot;f_confirm&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">value=</span><span class="s">&quot;Submit&quot;</span><span class="nt">&gt;&lt;/button&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre></div>
+</div>
+<div class="slide" id="genshi-output-code">
+<h1>Genshi Output - Code</h1>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">genshi.template</span> <span class="kn">import</span> <span class="n">MarkupTemplate</span>
+<span class="kn">from</span> <span class="nn">flatland.out.genshi_06</span> <span class="kn">import</span> <span class="n">setup</span>
+
+<span class="n">template</span> <span class="o">=</span> <span class="n">MarkupTemplate</span><span class="p">(</span><span class="n">markup</span><span class="p">)</span>
+<span class="n">setup</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+
+<span class="n">kw</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;form&#39;</span><span class="p">:</span> <span class="n">PasswordCompareForm</span><span class="p">()</span> <span class="p">}</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s">&#39;xhtml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="slide" id="idealist-example">
+<h1>Idealist example</h1>
+<img alt="images/registration_form.jpg" src="images/registration_form.jpg" />
+</div>
+<div class="slide" id="compound-field-example">
+<h1>Compound field example</h1>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Location</span><span class="p">(</span><span class="n">Compound</span><span class="p">):</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;country&#39;</span><span class="p">,</span> <span class="s">&#39;state&#39;</span><span class="p">,</span> <span class="s">&#39;city&#39;</span><span class="p">,</span> <span class="s">&#39;street_address&#39;</span><span class="p">,</span> <span class="s">&#39;postal_code&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__compound_init__</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">field_schema</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">Country</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;country&#39;</span><span class="p">,</span>
+                          <span class="n">label</span><span class="o">=</span><span class="n">N_</span><span class="p">(</span><span class="s">&#39;Country&#39;</span><span class="p">),</span>
+                          <span class="n">optional</span><span class="o">=</span><span class="n">optional</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                          <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+                              <span class="n">Present</span><span class="p">(),</span>
+                              <span class="n">Converted</span><span class="p">()]),</span>
+            <span class="n">State</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;state&#39;</span><span class="p">,</span>
+                        <span class="n">label</span><span class="o">=</span><span class="n">N_</span><span class="p">(</span><span class="s">&#39;Province, region, state, or territory&#39;</span><span class="p">),</span>
+                        <span class="n">optional</span><span class="o">=</span><span class="n">optional</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                        <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+                            <span class="n">ValidState</span><span class="p">()]),</span>
+            <span class="n">String</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;city&#39;</span><span class="p">,</span>
+                         <span class="n">label</span><span class="o">=</span><span class="n">N_</span><span class="p">(</span><span class="s">&#39;City/Town&#39;</span><span class="p">),</span>
+                         <span class="n">optional</span><span class="o">=</span><span class="n">optional</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                         <span class="n">validators</span><span class="o">=</span><span class="p">[</span>
+                             <span class="n">Present</span><span class="p">(),</span>
+                             <span class="n">NoLongerThan</span><span class="p">(</span><span class="mi">255</span><span class="p">)]),</span>
+</pre></div>
+</div>
+<div class="slide" id="compound-field-cont-d">
+<h1>Compound Field cont'd</h1>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">compose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Emits an AssetAddress object.&quot;&quot;&quot;</span>
+    <span class="n">aa</span> <span class="o">=</span> <span class="n">AssetAddress</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_object</span><span class="p">(</span><span class="n">aa</span><span class="p">,</span> <span class="n">omit</span><span class="o">=</span><span class="s">&#39;autonomous&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">aa</span>
+
+<span class="k">def</span> <span class="nf">explode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Consumes an AssetAddress object.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">levels</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">id</span>
+</pre></div>
+</div>
+<div class="slide" id="other-applications">
+<h1>Other applications</h1>
+<ul class="simple">
+<li><span class="incremental">REST Service</span></li>
+<li><span class="incremental">JSON</span></li>
+<li><span class="incremental">Config validation</span></li>
+<li><span class="incremental">argv</span></li>
+<li><span class="incremental">Cookies</span></li>
+<li><span class="incremental">noSQL</span></li>
+</ul>
+</div>
+<div class="slide" id="api-with-multiple-inputs">
+<h1>API with multiple inputs</h1>
+<img alt="images/guardian.jpg" src="images/guardian.jpg" />
+</div>
+<div class="slide" id="idealist-postgresql-hstore">
+<h1>Idealist Postgresql / HSTORE</h1>
+<p>Custom SQLAlchemy column type</p>
+<ul class="simple">
+<li>Serializes data structures into queryable / indexable key-value store.</li>
+<li>Allows non-critical aspects of the schema to evolve over time with
+minimal obstacles and migration headaches.</li>
+<li>Allows us to store a whole value of <em>mostly</em> identical object types
+in a single table.</li>
+<li>Mostly concerned with type conversion and marshalling, less so
+with validation.</li>
+<li>Duck typing</li>
+<li>Sparse storage.</li>
+</ul>
+</div>
+<div class="slide" id="idealist-skeleton-schema">
+<h1>Idealist Skeleton Schema</h1>
+<div class="highlight"><pre><span class="n">ContentProperties</span> <span class="o">=</span> <span class="n">flatland</span><span class="o">.</span><span class="n">SparseDict</span><span class="o">.</span><span class="n">of</span><span class="p">(</span>
+  <span class="n">flatland</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&quot;access&quot;</span>
+      <span class="p">)</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span><span class="n">converted</span><span class="p">)</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+  <span class="n">flatland</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&quot;access_other&quot;</span>
+      <span class="p">)</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span><span class="n">converted</span><span class="p">)</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+  <span class="n">flatland</span><span class="o">.</span><span class="n">DateTime</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&quot;attendee_registration_end_date&quot;</span>
+      <span class="p">)</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span><span class="n">converted</span><span class="p">)</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+  <span class="n">flatland</span><span class="o">.</span><span class="n">DateTime</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&quot;attendee_registration_start_date&quot;</span>
+      <span class="p">)</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span><span class="n">converted</span><span class="p">)</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+  <span class="n">NullableBoolean</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&quot;can_bring_guests&quot;</span>
+      <span class="p">)</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span><span class="n">converted</span><span class="p">)</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+  <span class="n">flatland</span><span class="o">.</span><span class="n">Integer</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&quot;cost&quot;</span>
+      <span class="p">)</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span><span class="n">converted</span><span class="p">)</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="slide" id="idealist-preference-schema">
+<h1>Idealist Preference Schema</h1>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">PreferenceSchema</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Flatland schema describing preferences. &quot;&quot;&quot;</span>
+    <span class="n">policy</span> <span class="o">=</span> <span class="s">&#39;duck&#39;</span>
+</pre></div>
+</div>
+<div class="slide" id="idealist-preferences-extract">
+<h1>Idealist Preferences Extract</h1>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">UserPreferenceSchema</span><span class="p">(</span><span class="n">PreferenceSchema</span><span class="p">):</span>
+    <span class="n">profile</span> <span class="o">=</span> <span class="n">Dict</span><span class="o">.</span><span class="n">of</span><span class="p">(</span>
+        <span class="n">Enum</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;visibility&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">valued</span><span class="p">(</span>
+            <span class="s">&#39;any&#39;</span><span class="p">,</span> <span class="s">&#39;connected&#39;</span><span class="p">,</span> <span class="s">&#39;member&#39;</span><span class="p">,</span> <span class="s">&#39;none&#39;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">using</span><span class="p">(</span>
+            <span class="n">default</span><span class="o">=</span><span class="s">&#39;member&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">N_</span><span class="p">(</span><span class="s">&#39;Who can see my profile&#39;</span><span class="p">)</span>
+        <span class="p">))</span>
+
+    <span class="n">communication</span> <span class="o">=</span> <span class="n">Dict</span><span class="o">.</span><span class="n">of</span><span class="p">(</span>
+        <span class="n">Boolean</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;html_email&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">using</span><span class="p">(</span>
+            <span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">true</span><span class="o">=</span><span class="s">u&#39;on&#39;</span><span class="p">,</span> <span class="n">false</span><span class="o">=</span><span class="s">u&#39;off&#39;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">N_</span><span class="p">(</span><span class="s">&#39;Receive email in HTML format.&#39;</span><span class="p">)),</span>
+        <span class="n">Boolean</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s">&#39;do_not_mail&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">using</span><span class="p">(</span>
+            <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">true</span><span class="o">=</span><span class="s">u&#39;on&#39;</span><span class="p">,</span> <span class="n">false</span><span class="o">=</span><span class="s">u&#39;off&#39;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">N_</span><span class="p">(</span><span class="s">&#39;Do not send any email.&#39;</span><span class="p">)),</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<div class="slide" id="xodb">
+<h1>xodb</h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Xapian object database for Python.</p>
+<p>Object schema and transformation rules defined using extended
+flatland elements.</p>
+<ul class="simple">
+<li>Prefixed or unprefixed</li>
+<li>To facet or not to facet?</li>
+</ul>
+</div>
+<div class="slide" id="xodb-imagine-a-model-class">
+<h1>xodb - Imagine a model class</h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Department</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">employees</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">employees</span> <span class="o">=</span> <span class="n">employees</span>
+</pre></div>
+</div>
+<div class="slide" id="xodb-create-a-schema">
+<h1>xodb - Create a Schema</h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">xodb</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">Array</span>
+
+<span class="k">class</span> <span class="nc">DepartmentSchema</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+    <span class="n">language</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">facet</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">employees</span> <span class="o">=</span> <span class="n">Array</span><span class="o">.</span><span class="n">of</span><span class="p">(</span>
+        <span class="n">String</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">facet</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<div class="slide" id="xodb-associate">
+<h1>xodb - Associate</h1>
+<p>Create an index and associate schema to model class:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">xodb</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">xodb</span><span class="o">.</span><span class="n">temp</span><span class="p">()</span>
+<span class="n">db</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">Department</span><span class="p">,</span> <span class="n">DepartmentSchema</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="slide" id="xodb-flatten">
+<h1>xodb - Flatten</h1>
+<p>Now, create some departments:</p>
+<div class="highlight"><pre><span class="n">housing</span> <span class="o">=</span> <span class="n">Department</span><span class="p">(</span><span class="s">&quot;housing&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;bob&#39;</span><span class="p">,</span> <span class="s">&#39;jane&#39;</span><span class="p">])</span>
+<span class="n">monkeys</span> <span class="o">=</span> <span class="n">Department</span><span class="p">(</span><span class="s">&quot;monkeys&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;bob&#39;</span><span class="p">,</span> <span class="s">&#39;rick&#39;</span><span class="p">])</span>
+</pre></div>
+<p>and add them to the database:</p>
+<div class="highlight"><pre><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">housing</span><span class="p">,</span> <span class="n">monkeys</span><span class="p">)</span>
+<span class="n">db</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="slide" id="xodb-retrieve">
+<h1>xodb - Retrieve</h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight"><pre><span class="k">assert</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;name:monkeys&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;monkeys&quot;</span>
+</pre></div>
+<div class="highlight"><pre><span class="k">assert</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;employees:jane&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;housing&quot;</span>
+</pre></div>
+</div>
+<div class="slide" id="xodb-for-more-information">
+<h1>xodb - For more information</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">author:</th><td class="field-body">Michel Pelletier</td>
+</tr>
+<tr class="field"><th class="field-name">website:</th><td class="field-body"><a class="reference external" href="http://bitbucket.org/pelletier_michel/xodb">http://bitbucket.org/pelletier_michel/xodb</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="pygtkhelpers">
+<h1>PyGTKHelpers</h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="images/pygtkhelpers-logo.jpg" src="images/pygtkhelpers-logo.jpg" />
+<hr class="docutils" />
+<p>Uses flatland for form schema definition and validation of input forms in PyGTK apps.</p>
+<hr class="docutils" />
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="http://packages.python.org/pygtkhelpers">http://packages.python.org/pygtkhelpers</a></td></tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="pygtkhelpers-schema">
+<h1>PyGTKHelpers - Schema</h1>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">flatland</span> <span class="kn">import</span> <span class="n">Form</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Boolean</span>
+<span class="kn">from</span> <span class="nn">flatland.validation</span> <span class="kn">import</span> <span class="n">ValueBetween</span>
+
+<span class="k">class</span> <span class="nc">PersonSchema</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">String</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span>
+        <span class="n">ValueBetween</span><span class="p">(</span><span class="n">minimum</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="n">validated_by</span><span class="p">(</span>
+        <span class="n">ValueBetween</span><span class="p">(</span><span class="n">minimum</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">weight</span><span class="o">.</span><span class="n">render_options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">style</span><span class="o">=</span><span class="s">&#39;slider&#39;</span>
+    <span class="p">)</span>
+    <span class="n">friendly</span> <span class="o">=</span> <span class="n">Boolean</span>
+</pre></div>
+</div>
+<div class="slide" id="pygtkhelpers-form">
+<h1>PyGTKHelpers - Form</h1>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">pygtkhelpers.forms</span> <span class="kn">import</span> <span class="n">FormView</span>
+
+<span class="k">class</span> <span class="nc">PersonView</span><span class="p">(</span><span class="n">FormView</span><span class="p">):</span>
+    <span class="n">schema_type</span> <span class="o">=</span> <span class="n">PersonSchema</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">PersonView</span><span class="p">()</span><span class="o">.</span><span class="n">show_and_run</span><span class="p">()</span>
+</pre></div>
+<hr class="docutils" />
+<img alt="images/simpleform.png" src="images/simpleform.png" />
+<hr class="docutils" />
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><a class="reference external" href="http://packages.python.org/pygtkhelpers/api_forms.html">http://packages.python.org/pygtkhelpers/api_forms.html</a></td></tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="id3">
+<h1>PyGTKHelpers</h1>
+<p>For details:
+<a class="reference external" href="http://packages.python.org/pygtkhelpers">http://packages.python.org/pygtkhelpers</a>
+<a class="reference external" href="http://packages.python.org/pygtkhelpers/api_forms.html">http://packages.python.org/pygtkhelpers/api_forms.html</a></p>
+</div>
+<div class="slide" id="for-more-on-flatland">
+<h1>For more on flatland</h1>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">author:</th><td class="field-body">Jason Kirtland</td>
+</tr>
+<tr class="field"><th class="field-name">website:</th><td class="field-body"><a class="reference external" href="http://discorporate.us/projects/flatland/">http://discorporate.us/projects/flatland/</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="slide" id="dinner-time">
+<h1>Dinner Time!</h1>
+<img alt="images/flat-small.jpg" src="images/flat-small.jpg" />
+</div>
+<div class="slide" id="thanks">
+<h1>Thanks!</h1>
+<div class="line-block">
+<div class="line">Scott Wilson</div>
+<div class="line"><a class="reference external" href="mailto:scott&#64;idealist.org">scott&#64;idealist.org</a></div>
+<div class="line">&#64;swidealist</div>
+</div>
+<img alt="images/idealist.gif" src="images/idealist.gif" />
+</div>
+</div>
+</body>
+</html>
