@@ -30,10 +30,8 @@ def error_filter_factory(class_='error'):
     """
     def error_filter(tagname, attributes, contents, context, bind):
         if bind is not None and bind.errors:
-            if 'class' in attributes:
-                attributes['class'] = ' '.join(attributes['class'], class_)
-            else:
-                attributes['class'] = class_
+            current_css_classes = attributes.get('class', '').split()
+            attributes['class'] = ' '.join(current_css_classes + [class_])
         return contents
     return error_filter
 
@@ -62,10 +60,8 @@ class AttributeCSSClassFilter(object):
 
     def __call__(self, tagname, attributes, contents, context, bind):
         if bind is not None and self.predicate(bind):
-            if 'class' in attributes:
-                attributes['class'] = ' '.join(attributes['class'], self.class_)
-            else:
-                attributes['class'] = self.class_
+            current_css_classes = attributes.get('class', '').split()
+            attributes['class'] = ' '.join(current_css_classes + [class_])
         return contents
 
 
